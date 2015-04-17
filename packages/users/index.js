@@ -1,0 +1,2 @@
+// :: models :: //
+require('./models/user');
