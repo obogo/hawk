@@ -6,6 +6,9 @@ module.exports = {
     http: {
         port: process.env.PORT || 2200
     },
+    "migrations": {
+        "dropDatabase": true
+    },
     "data": {
         "systemAdmin": {
             "email": "admin@mycompany.com",

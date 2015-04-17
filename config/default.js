@@ -38,6 +38,10 @@ module.exports = {
     hostname: process.env.HOST || process.env.HOSTNAME,
     db: "mongodb://localhost/default_db",
 
+    "migrations": {
+        "dropDatabase": false
+    },
+
     // The secret should be set to a non-guessable string that
     // is used to compute a session hash
     sessionSecret: 's3ss10nS3cr3t',

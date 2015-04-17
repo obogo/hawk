@@ -11,16 +11,33 @@ function init() {
     debug('ENV', process.env.NODE_ENV);
 
     async.waterfall([
-        setupDatabase,
+        connectToDatabase,
+        dropDatabase,
         setupModels,
         populateAccounts
     ], function (err) {
-        debug('done');
+        if (!err) {
+            debug('done');
+        }
         process.exit();
     });
 }
 
-function setupDatabase(done) {
+function dropDatabase(done) {
+    if(config.migrations.dropDatabase) {
+        mongoose.connection.db.dropDatabase(function (err) {
+            if(err) {
+                throw new Error(err.message);
+            }
+            debug('Database dropped.');
+            done();
+        });
+    } else {
+        done();
+    }
+}
+
+function connectToDatabase(done) {
     var mongooseConfig = config.get('mongoose');
     mongoose.set('debug', mongooseConfig.debug);
     mongoose.connect(config.get('db'));
