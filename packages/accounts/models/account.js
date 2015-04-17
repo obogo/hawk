@@ -12,7 +12,7 @@ var AccountSchema = new Schema({
     active: {type: Boolean, default: true},
     provider: {type: String, default: 'local'},
     verified: {type: Boolean, default: false},
-    roles: {type: Array, default: ['authenticated']},
+    roles: {type: Array, default: []},
     name: {type: String},
     email: {type: String, required: true, index: true},
     profile: {
@@ -64,4 +64,4 @@ AccountSchema.plugin(passportLocalMongoose, {
     //selectFields: '-hash -salt -active -provider -__v'
 });
 
-mongoose.model('Account', AccountSchema, 'sideclick_accounts');
+mongoose.model('Account', AccountSchema);

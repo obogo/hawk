@@ -7,13 +7,13 @@ module.exports = function (hawk, app, auth) {
     app.get('/account', auth.requiresLogin, accounts.show);
 
     app.route('/accounts')
-        .post(auth.requiresSideclickAdmin, accounts.create)
-        .get(auth.requiresSideclickAdmin, accounts.all);
+        .post(auth.requiresSystemAdmin, accounts.create)
+        .get(auth.requiresSystemSupport, accounts.all);
 
     app.route('/accounts/:accountId')
-        .get(auth.requiresSideclickAdmin, accounts.show)
-        .put(auth.requiresSideclickAdmin, accounts.update)
-        .delete(auth.requiresSideclickAdmin, accounts.destroy);
+        .get(auth.requiresSystemSupport, accounts.show)
+        .put(auth.requiresSystemSupport, accounts.update)
+        .delete(auth.requiresSystemAdmin, accounts.destroy);
 
     app.param('accountId', accounts.load);
 };

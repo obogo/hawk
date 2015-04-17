@@ -155,4 +155,4 @@ UserSchema.options.toJSON.transform = function (doc, ret, options) {
     delete ret._id;
 };
 
-mongoose.model('User', UserSchema, 'app_users');
+mongoose.model('User', UserSchema, 'users');

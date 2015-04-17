@@ -1,9 +1,9 @@
 module.exports = {
-    "db": "mongodb://localhost/dev_db",
+    "db": "mongodb://localhost/dev_staging",
     "mongoose": {
         "debug": true
     },
     http: {
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 2100
     }
 };

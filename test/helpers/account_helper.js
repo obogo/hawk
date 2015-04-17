@@ -2,13 +2,13 @@ process.env.NODE_ENV = process.env.NODE_ENV || "testing";
 
 var hawk = require('local-lib').hawk;
 var promise = hawk.init();
+var config = require('config');
 
 exports.login = function (scope, email, password) {
 
     scope.timeout(0);
 
-    email = email || 'user1@sideclick.io';
-    password = password = 'password';
+    var user = config.data.systemAdmin;
 
     before(function (done) {
         promise.onFulfill(function () {
@@ -18,7 +18,7 @@ exports.login = function (scope, email, password) {
             scope.session = new Session();
             scope.session
                 .post('/login')
-                .send({email: email, password: password})
+                .send({email: user.email, password: user.password})
                 .expect(200, done);
         });
     });

@@ -30,4 +30,4 @@ AdminSchema.options.toJSON.transform = function (doc, ret, options) {
     delete ret._id;
 };
 
-mongoose.model('Admin', AdminSchema, 'sideclick_admins');
+mongoose.model('Admin', AdminSchema);

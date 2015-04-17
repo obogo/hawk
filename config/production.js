@@ -1,6 +1,9 @@
 module.exports = {
-    "db": "mongodb://intercomuser:intercompass@kahana.mongohq.com:10051/intercom",
+    "db": "mongodb://localhost/prod_db",
     "mongoose": {
         "debug": false
+    },
+    http: {
+        port: process.env.PORT || 80
     }
 };

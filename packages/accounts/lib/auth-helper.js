@@ -1,7 +1,6 @@
 'use strict';
 
 var mongoose = require('mongoose');
-//var Admin = mongoose.model('Admin');
 
 /**
  * Generic require login routing middleware
@@ -14,8 +13,10 @@ exports.requiresLogin = function (req, res, next) {
 };
 
 /**
- * Generic require Admin routing middleware
- * Basic Role checking - future release with full permission system
+ * Can manage their own account and applications
+ * @param req
+ * @param res
+ * @param next
  */
 exports.requiresAdmin = function (req, res, next) {
     if (!req.isAuthenticated() || !req.user.hasRole('admin')) {
@@ -25,53 +26,30 @@ exports.requiresAdmin = function (req, res, next) {
 };
 
 /**
- *
+ * Can manage all accounts and applications
  * @param req
  * @param res
  * @param next
  */
-exports.requiresSideclickAdmin = function (req, res, next) {
-    if (!req.isAuthenticated() || !req.user.hasRole('sideclick-admin')) {
+exports.requiresSystemAdmin = function (req, res, next) {
+    if (!req.isAuthenticated() || !req.user.hasRole('system-admin')) {
         return res.status(401).send('User is not authorized');
     }
     next();
 };
 
-//exports.requiresTeammate = function (req, res, next) {
-//    var conds = {
-//        'app._id': req.params.app || req.query.app || req.application,
-//        'user._id': req.user,
-//        'user.status': 'active'
-//    };
-//
-//    Admin.findOne(conds).exec(function (err, teamMember) {
-//        if (err || !teamMember) {
-//            return res.status(401).send('User is not authorized');
-//        }
-//        req.teamMember = teamMember;
-//        next();
-//    });
-//};
-
-// TODO: Fix this so it uses req.teamMember if exists
-//exports.requiresTeamAdmin = function (req, res, next) {
-//    var conds = {
-//        'app._id': req.params.app || req.query.app || req.application,
-//        'user._id': req.user,
-//        'user.status': 'active',
-//        $or: [
-//            {'user.role': 'owner'},
-//            {'user.role': 'admin'}
-//        ]
-//    };
-//
-//    Admin.count(conds).exec(function (err, count) {
-//        if (!count) {
-//            return res.status(401).send('User is not authorized');
-//        }
-//        next();
-//    });
-//};
+/**
+ * Limited management of all accounts and applications
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.requiresSystemSupport = function (req, res, next) {
+    if (!req.isAuthenticated() || !(req.user.hasRole('system-admin') || req.user.hasRole('system-support'))) {
+        return res.status(401).send('User is not authorized');
+    }
+    next();
+};
 
 exports.requiresWrite = function (req, res, next) {
     if (req.authInfo) {

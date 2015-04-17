@@ -1,5 +1,6 @@
 var assert = require("assert");
 var account = require('./helpers/account_helper');
+var config = require('config');
 
 describe('accounts', function () {
 
@@ -7,7 +8,7 @@ describe('accounts', function () {
 
     scope.timeout(0);
 
-    var user = {email: 'user3@sideclick.io', password: 'password'};
+    var user = config.data.testUser;
 
     describe('GET /accounts', function () {
 

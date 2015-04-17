@@ -52,30 +52,46 @@ function setupModels(done) {
     });
 }
 
-var populateAccounts = function (done) {
-    debug('populating accounts');
-
-    var email = 'user1@sideclick.io';
-    var password = 'password';
-
+var populateAccountsSystemAdmin = function (done) {
     var Account = mongoose.model('Account');
     var account = new Account({
-        email: email,
-        verified: true,
-        roles: ['authenticated', 'sideclick-admin']
+        email: config.data.systemAdmin.email,
+        verified: config.data.systemAdmin.verified,
+        roles: config.data.systemAdmin.roles
     });
 
-    Account.register(account, password, function (err, account) {
+    Account.register(account, config.data.systemAdmin.password, function (err) {
         if (err) {
             throw new Error(err.message);
         }
         done();
     });
+}
+
+var populateAccountsSystemSupport = function (done) {
+    var Account = mongoose.model('Account');
+    var account = new Account({
+        email: config.data.systemSupport.email,
+        verified: config.data.systemSupport.verified,
+        roles: config.data.systemSupport.roles
+    });
+
+    Account.register(account, config.data.systemSupport.password, function (err) {
+        if (err) {
+            throw new Error(err.message);
+        }
+        done();
+    });
+}
+
+var populateAccounts = function (done) {
+    debug('populating accounts');
+    async.parallel([
+        populateAccountsSystemAdmin,
+        populateAccountsSystemSupport
+    ], function (err) {
+        done()
+    });
 };
 
 init();
-
-
-
-
-

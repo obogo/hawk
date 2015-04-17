@@ -3,17 +3,25 @@
 var path = require('path');
 
 module.exports = {
-    name: 'your_app_name',
+    name: 'my_app_name',
     version: '1.0',
     base: path.normalize(__dirname + '/..'),
     checkDependencies: true,
-    application: {
-        name: 'Sideclick',
-        company_name: 'Sideclick.io',
-        site_url: 'http://sideclick.io',
-        email: {
-            support: 'support@sideclick.io'
-        }
+    data: {
+        application: {
+            name: 'My Application',
+            site_url: 'http://myapplication.io',
+            email: {
+                support: 'support@myapplication.io'
+            }
+        },
+        company: {
+            name: 'My company',
+            site_url: 'http://mycompany.com',
+            email: {
+                support: 'support@mycompany.com'
+            }
+        },
     },
     http: {
         port: process.env.PORT || 3000
@@ -28,8 +36,7 @@ module.exports = {
         }
     },
     hostname: process.env.HOST || process.env.HOSTNAME,
-    db: process.env.MONGOHQ_URL,
-    templateEngine: 'swig',
+    db: "mongodb://localhost/default_db",
 
     // The secret should be set to a non-guessable string that
     // is used to compute a session hash

@@ -3,10 +3,11 @@ var assert = require("assert");
 var hawk = require('local-lib').hawk;
 var promise = hawk.init();
 var account = require('./helpers/account_helper');
+var config = require('config');
 
 describe('authentication', function () {
 
-    var user = {email: 'user2@sideclick.io', password: 'password'};
+    var user = config.data.testUser;
     var Session, session;
 
     before(function (done) {
@@ -81,7 +82,7 @@ describe('authentication', function () {
 
             request(hawk.app)
                 .post('/login')
-                .send({user: 'bogus@sideclick.io', password: 'password'})
+                .send({user: 'user@unregistered.com', password: 'password'})
                 .expect(400, done);
         });
     });
